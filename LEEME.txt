@@ -1,0 +1,14 @@
+PRESENTACION "EL HEROE DEL MUNDO"
+
+RECOMENDADO EN LA PC:
+1. Descomprimir esta carpeta completa.
+2. Hacer doble clic en INICIAR_PRESENTACION.bat.
+3. Se abrira la presentacion en el navegador mediante http://127.0.0.1:8765.
+4. Dejar abierta la pequeña ventana del servidor mientras dure la presentacion.
+5. Asi los videos incrustados de YouTube reciben un origen web valido y evitan el error 153.
+
+EN CELULAR / ARCHIVO LOCAL:
+Si abrís el HTML directamente y Android muestra una direccion content://, los videos no se incrustaran. En lugar del error aparecera un boton "Abrir video en YouTube". Las notas y las diapositivas siguen funcionando normalmente.
+
+PANTALLA COMPLETA:
+Los botones de la presentación se ocultan en pantalla completa.

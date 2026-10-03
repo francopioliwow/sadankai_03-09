@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#08111e" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>El Héroe del Mundo · Presentación Sadankai</title>
+  <style>
+    :root{
+      --bg:#07111f;
+      --paper:#f8f5ef;
+      --ink:#f7f4ee;
+      --muted:#c5cbd3;
+      --gold:#e5b45c;
+      --gold2:#f4d79a;
+      --pink:#efb4c5;
+      --line:rgba(255,255,255,.16);
+      --glass:rgba(7,17,31,.68);
+      --shadow:0 24px 80px rgba(0,0,0,.38);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:var(--bg);font-family:Inter, ui-sans-serif, system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);overflow:hidden}
+    button,a{font:inherit}
+    button{color:inherit}
+    .deck{height:100%;width:100%;position:relative;overflow:hidden;background:#07111f}
+    .slides{height:100%;display:flex;transition:transform .85s cubic-bezier(.22,.78,.22,1);will-change:transform;perspective:1600px}
+    .slide{position:relative;min-width:100vw;height:100dvh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:clamp(24px,4vw,72px);opacity:.82;transition:opacity .72s ease}
+    .slide::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.28))}
+    .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.88) contrast(1.02) brightness(.9);transform:scale(1.08);transition:transform 1.25s cubic-bezier(.2,.7,.2,1), filter 1.25s ease}
+    .overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,9,18,.88) 0%,rgba(3,9,18,.61) 45%,rgba(3,9,18,.22) 100%);opacity:.78;transition:opacity 1s ease}
+    .overlay.center{background:linear-gradient(180deg,rgba(3,9,18,.38),rgba(3,9,18,.68))}
+    .grain{position:absolute;inset:0;opacity:.05;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");animation:grainMove 14s linear infinite}
+    .content{position:relative;z-index:2;width:min(1180px,100%);margin:auto}
+    .content.narrow{width:min(960px,100%)}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;text-transform:uppercase;letter-spacing:.18em;font-size:clamp(11px,1.1vw,14px);font-weight:800;color:var(--gold2);margin-bottom:18px}
+    .eyebrow::before{content:"";width:42px;height:1px;background:var(--gold)}
+    h1,h2,h3,p{margin:0}
+    h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(46px,8vw,112px);line-height:.9;letter-spacing:-.04em;font-weight:500;max-width:900px;text-wrap:balance}
+    h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,5vw,76px);line-height:1;letter-spacing:-.025em;font-weight:500;text-wrap:balance}
+    h3{font-size:clamp(20px,2vw,28px);line-height:1.15;margin-bottom:8px}
+    .lead{font-size:clamp(18px,2.15vw,30px);line-height:1.42;color:#eef0f2;max-width:900px;text-wrap:pretty}
+    .small{font-size:clamp(14px,1.2vw,17px);line-height:1.55;color:var(--muted)}
+    .quote{margin-top:28px;padding:20px 24px;border-left:3px solid var(--gold);background:rgba(7,17,31,.48);backdrop-filter:blur(8px);max-width:850px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(20px,2.2vw,31px);line-height:1.35;color:#fff}
+    .quote span{display:block;margin-top:10px;font-family:Inter,ui-sans-serif,system-ui;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold2)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+    .card{border:1px solid var(--line);background:rgba(7,17,31,.62);backdrop-filter:blur(14px);padding:26px;border-radius:22px;box-shadow:var(--shadow)}
+    .card .num{font-family:Georgia,"Times New Roman",serif;font-size:44px;color:var(--gold);line-height:1;margin-bottom:12px}
+    .card p{font-size:clamp(15px,1.3vw,18px);line-height:1.5;color:#e5e8ec}
+    .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:34px}
+    .step{padding-top:18px;border-top:2px solid rgba(229,180,92,.42);position:relative}
+    .step::before{content:"";position:absolute;top:-6px;left:0;width:10px;height:10px;border-radius:50%;background:var(--gold)}
+    .step b{display:block;font-size:clamp(15px,1.3vw,19px);margin-bottom:6px}
+    .step span{color:var(--muted);font-size:13px;line-height:1.45}
+    .hero-layout{display:grid;grid-template-columns:1.08fr .92fr;gap:42px;align-items:center}
+    .hero-layout .panel{padding:30px;border-radius:26px;background:rgba(7,17,31,.66);backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:var(--shadow)}
+    .tagrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+    .tag{padding:8px 12px;border:1px solid rgba(244,215,154,.38);border-radius:999px;background:rgba(7,17,31,.42);font-size:13px;color:#f3e7ca}
+    .bigword{font-family:Georgia,"Times New Roman",serif;font-size:clamp(70px,13vw,190px);line-height:.78;letter-spacing:-.06em;color:rgba(255,255,255,.98);text-shadow:0 10px 50px rgba(0,0,0,.45)}
+    .bigword em{font-style:normal;color:var(--gold)}
+    .question{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,5.5vw,82px);line-height:1.08;text-align:center;text-wrap:balance}
+    .question strong{color:var(--gold2);font-weight:500}
+    .footer-note{position:absolute;z-index:3;left:clamp(20px,3vw,48px);bottom:clamp(18px,2vw,30px);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+    .nav{position:fixed;z-index:20;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:8px;border:1px solid rgba(255,255,255,.12);background:rgba(5,12,22,.68);backdrop-filter:blur(14px);border-radius:999px;box-shadow:0 16px 40px rgba(0,0,0,.26)}
+    .nav button{width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.08);cursor:pointer;display:grid;place-items:center;font-size:20px;transition:.2s}
+    .nav button:hover{background:rgba(255,255,255,.14)}
+    .counter{min-width:72px;text-align:center;font-variant-numeric:tabular-nums;font-size:13px;color:#e8e8e8}
+    .topbar{position:fixed;z-index:20;top:max(12px,env(safe-area-inset-top));right:16px;display:flex;gap:8px}
+    .iconbtn{border:1px solid rgba(255,255,255,.12);background:rgba(5,12,22,.58);backdrop-filter:blur(12px);border-radius:999px;padding:10px 13px;cursor:pointer;font-size:13px;color:#f5f5f5}
+    .progress{position:fixed;z-index:22;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),#f6d9a4);width:0;transition:width .4s ease}
+    .notes{position:fixed;z-index:30;right:18px;top:70px;width:min(420px,calc(100vw - 36px));max-height:72vh;overflow:auto;padding:20px;border-radius:18px;background:rgba(6,12,22,.94);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow);display:none}
+    .notes.show{display:block}
+    .notes h4{margin:0 0 8px;color:var(--gold2)}
+    .notes p{color:#e0e3e6;font-size:14px;line-height:1.6;margin:0}
+    .cta{display:inline-flex;align-items:center;gap:10px;margin-top:24px;padding:12px 16px;border-radius:999px;border:1px solid rgba(244,215,154,.35);background:rgba(229,180,92,.12);color:#fff;text-decoration:none;font-weight:700;font-size:14px}
+    .cta:hover{background:rgba(229,180,92,.2)}
+    .source-list{display:grid;gap:12px;margin-top:26px;max-width:860px}
+    .source-list a{color:#fff;text-decoration:none;padding:15px 18px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.055)}
+    .source-list a span{color:var(--gold2);font-weight:700}
+
+
+    .slide::before{content:"";position:absolute;inset:-20%;pointer-events:none;background:
+      radial-gradient(circle at 18% 20%, rgba(244,215,154,.12), transparent 28%),
+      radial-gradient(circle at 82% 78%, rgba(239,180,197,.09), transparent 26%),
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.03), transparent 34%);
+      opacity:.7;transition:opacity .9s ease}
+    .slide.active{opacity:1}
+    .slide.active::before{opacity:1}
+    .slide.active .bg{transform:scale(1);filter:saturate(1) contrast(1.04) brightness(1)}
+    .slide.active .overlay{opacity:1}
+    .content > *, .content .panel > *, .content .card > *, .content .step, .content .tagrow, .content .quote{
+      opacity:0; transform:translateY(26px); filter:blur(12px);
+      transition:opacity .72s ease, transform .82s cubic-bezier(.2,.72,.18,1), filter .82s ease;
+    }
+    .slide.active .content > *, .slide.active .content .panel > *, .slide.active .content .card > *, .slide.active .content .step, .slide.active .content .tagrow, .slide.active .content .quote{
+      opacity:1; transform:none; filter:none;
+    }
+    .slide.active .content > *:nth-child(1){transition-delay:.06s}
+    .slide.active .content > *:nth-child(2){transition-delay:.14s}
+    .slide.active .content > *:nth-child(3){transition-delay:.22s}
+    .slide.active .content > *:nth-child(4){transition-delay:.30s}
+    .slide.active .content > *:nth-child(5){transition-delay:.38s}
+    .slide.active .content .card:nth-child(1), .slide.active .content .step:nth-child(1){transition-delay:.16s}
+    .slide.active .content .card:nth-child(2), .slide.active .content .step:nth-child(2){transition-delay:.28s}
+    .slide.active .content .card:nth-child(3), .slide.active .content .step:nth-child(3){transition-delay:.40s}
+    .slide.active .content .step:nth-child(4){transition-delay:.52s}
+    .slide.active .content .step:nth-child(5){transition-delay:.64s}
+    .card,.hero-layout .panel,.quote,.video-card,.nav,.iconbtn,.notes,.video-shell{box-shadow:0 22px 60px rgba(0,0,0,.28)}
+    .card,.hero-layout .panel,.video-card{transition:transform .25s ease, box-shadow .25s ease, background .25s ease}
+    .slide.active .card:hover,.slide.active .hero-layout .panel:hover,.video-card:hover{transform:translateY(-4px);box-shadow:0 28px 70px rgba(0,0,0,.34)}
+    .bigword{position:relative}
+    .bigword::after{content:"";position:absolute;left:5%;right:5%;bottom:-14px;height:1px;background:linear-gradient(90deg,transparent, rgba(244,215,154,.75), transparent);opacity:.7}
+    .portrait-panel{position:relative;overflow:hidden;padding:18px}
+    .portrait-panel::before{content:"";position:absolute;inset:auto auto -30px -30px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle, rgba(229,180,92,.22), transparent 70%);pointer-events:none}
+    .portrait{display:block;width:min(100%,360px);aspect-ratio:4/5;object-fit:cover;border-radius:24px;border:1px solid rgba(255,255,255,.16);box-shadow:0 26px 70px rgba(0,0,0,.34);margin:auto}
+    .quote strong{color:var(--gold2)}
+    .video-layout{display:grid;grid-template-columns:.92fr 1.08fr;gap:30px;align-items:center}
+    .embedded-video{position:relative;width:100%;aspect-ratio:16/9;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.17);background:#02060d;box-shadow:0 28px 80px rgba(0,0,0,.42)}
+    .embedded-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .video-fallback{position:absolute;inset:0;display:none;background:#02060d}
+    .video-fallback.show{display:block}
+    .video-fallback-link{position:absolute;inset:0;display:block;color:#fff;text-decoration:none;overflow:hidden}
+    .video-fallback-link img{width:100%;height:100%;object-fit:cover;filter:brightness(.52) saturate(.88) contrast(1.02);transform:scale(1.02)}
+    .video-fallback-shade{position:absolute;inset:0;background:
+      radial-gradient(circle at 50% 26%,rgba(229,180,92,.14),transparent 18%),
+      linear-gradient(180deg,rgba(2,6,13,.18) 0%,rgba(2,6,13,.52) 42%,rgba(2,6,13,.88) 100%)}
+    .video-fallback-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px}
+    .video-fallback-icon{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;margin:0 auto 20px;background:rgba(229,180,92,.18);border:1px solid rgba(244,215,154,.34);font-size:38px;color:var(--gold2);padding-left:6px;box-shadow:0 16px 40px rgba(0,0,0,.35)}
+    .video-fallback h4{margin:0 0 10px;font-size:clamp(20px,2vw,28px);line-height:1.2}
+    .video-fallback p{margin:0 auto;color:#eef0f2;font-size:14px;line-height:1.55;max-width:470px}
+    .video-fallback .video-fallback-cta{display:inline-flex;align-items:center;justify-content:center;margin-top:18px;padding:11px 16px;border-radius:999px;background:rgba(229,180,92,.16);border:1px solid rgba(244,215,154,.36);color:#fff;text-decoration:none;font-weight:800;font-size:13px;letter-spacing:.02em;backdrop-filter:blur(6px)}
+    .video-fallback-link:hover .video-fallback-cta{background:rgba(229,180,92,.24)}
+
+    .video-kicker{display:inline-flex;align-items:center;gap:9px;margin-top:18px;padding:8px 12px;border-radius:999px;border:1px solid rgba(244,215,154,.28);background:rgba(229,180,92,.10);color:#f4d79a;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .video-kicker::before{content:"▶";font-size:10px}
+    .thanks-title{font-family:Georgia,"Times New Roman",serif;font-size:clamp(58px,10vw,145px);line-height:.88;letter-spacing:-.055em;font-weight:500;text-align:center;text-shadow:0 18px 60px rgba(0,0,0,.36)}
+    @keyframes grainMove{0%{transform:translate3d(0,0,0)}25%{transform:translate3d(-1.2%,1%,0)}50%{transform:translate3d(1%,-1.1%,0)}75%{transform:translate3d(.6%,1.1%,0)}100%{transform:translate3d(0,0,0)}}
+
+
+    /* Modo presentación limpio: al entrar en pantalla completa desaparecen todos los controles. */
+    :fullscreen .topbar,
+    :fullscreen .nav,
+    :fullscreen .progress,
+    :fullscreen .notes{display:none !important}
+    :-webkit-full-screen .topbar,
+    :-webkit-full-screen .nav,
+    :-webkit-full-screen .progress,
+    :-webkit-full-screen .notes{display:none !important}
+
+    @media (max-width: 820px){
+      .slide{padding:72px 22px 96px;align-items:center}
+      .hero-layout{grid-template-columns:1fr;gap:22px}
+      .hero-layout .panel{padding:22px}
+      .grid{grid-template-columns:1fr;gap:12px;margin-top:22px}
+      .card{padding:18px;border-radius:17px}
+      .card .num{font-size:34px}
+      .timeline{grid-template-columns:1fr;gap:9px;margin-top:22px}
+      .step{padding:10px 0 10px 20px;border-top:0;border-left:2px solid rgba(229,180,92,.42)}
+      .step::before{top:15px;left:-6px}
+      .quote{margin-top:18px;padding:16px 18px}
+      .nav button{width:38px;height:38px}
+      .topbar{right:10px}
+      .iconbtn{padding:9px 11px}
+      .footer-note{display:none}
+      .video-grid{grid-template-columns:1fr}
+      .video-thumb{height:120px}
+      .video-shell{max-height:84vh;border-radius:20px}
+      .video-layout{grid-template-columns:1fr;gap:18px}
+      .embedded-video{border-radius:18px}
+    }
+    @media (max-height: 650px) and (orientation:landscape){
+      .slide{padding:46px 54px 72px}
+      h1{font-size:clamp(42px,7vw,76px)}
+      h2{font-size:clamp(34px,4.5vw,56px)}
+      .lead{font-size:clamp(16px,1.8vw,22px)}
+      .grid{margin-top:18px}.card{padding:16px}.card .num{font-size:30px}
+      .timeline{margin-top:18px}
+      .nav{bottom:10px}
+    }
+    @media (prefers-reduced-motion: reduce){.slides,.progress{transition:none}}
+  </style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <div class="progress" id="progress"></div>
+  <div class="slides" id="slides">
+
+    <section class="slide" data-note="INICIO. Decí: ‘Cuando escuchamos la palabra héroe pensamos en alguien extraordinario. Este Gosho propone otra idea: un héroe es quien enfrenta la realidad de su propia vida con valentía’. Pausa breve. Presentá el eje: no se trata de vencer a otros, sino de lograr una victoria interior.">
+      <img class="bg" src="assets/forja.png" alt="Espada siendo forjada frente a un paisaje japonés" />
+      <div class="overlay"></div><div class="grain"></div>
+      <div class="content">
+        <div class="eyebrow">Sadankai · Estudio del Gosho</div>
+        <h1>El Héroe<br>del Mundo</h1>
+        <p class="lead" style="margin-top:26px;max-width:690px">La verdadera victoria comienza en nuestro interior.</p>
+        <div class="tagrow"><span class="tag">Fe</span><span class="tag">Fortaleza interior</span><span class="tag">Acción</span><span class="tag">Revolución humana</span></div>
+      </div>
+      <div class="footer-note">Presentación basada en el material de estudio provisto</div>
+    </section>
+
+    <section class="slide" data-note="METÁFORA CENTRAL. Leé la frase de Nichiren. Explicá: el fuego no desaparece; lo que cambia es la calidad del metal. Las dificultades pueden ser el lugar donde nuestra fe se fortalece. Frase puente: ‘No siempre podemos evitar el fuego, pero sí podemos decidir cómo atravesarlo’.">
+      <img class="bg" src="assets/forja.png" alt="Espada al rojo vivo en una forja" />
+      <div class="overlay center"></div><div class="grain"></div>
+      <div class="content narrow" style="text-align:center">
+        <div class="eyebrow" style="justify-content:center">La imagen central</div>
+        <h2>El hierro sin templar se derrite.<br><span style="color:var(--gold2)">La espada bien forjada resiste.</span></h2>
+        <div class="quote" style="margin-inline:auto">“Lo que intento es forjar su fe”.<span>Nichiren Daishonin · Los escritos, pág. 876</span></div>
+        <p class="lead" style="margin:22px auto 0">La dificultad no siempre es señal de retroceso. Puede convertirse en el escenario donde fortalecemos nuestra vida.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-note="CONTEXTO. 1277: Shijo Kingo estaba enfrentado con su señor Ema por sus actividades como discípulo de Nichiren y su situación era peligrosa. Destacá que Nichiren no escribe desde la comodidad: alienta a alguien bajo presión real. Cerrá: ‘Y es justamente ahí donde le habla de victoria’.">
+      <img class="bg" src="assets/shijo.png" alt="Samurái contemplando un valle japonés al amanecer" />
+      <div class="overlay"></div><div class="grain"></div>
+      <div class="content">
+        <div class="hero-layout">
+          <div>
+            <div class="eyebrow">Fondo de escena · 1277</div>
+            <h2>Shijo Kingo estaba bajo una enorme presión.</h2>
+            <p class="lead" style="margin-top:22px">Había despertado la ira de su señor feudal, Ema. Su posición y su seguridad estaban en riesgo, y otros samuráis esperaban aprovechar la situación.</p>
+          </div>
+          <div class="panel">
+            <h3>¿Qué hizo Nichiren?</h3>
+            <p class="lead" style="font-size:clamp(18px,1.7vw,24px)">No le prometió una vida sin obstáculos. Lo alentó a <strong style="color:var(--gold2)">forjar su fe</strong>, dominar su mente y seguir actuando con integridad.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="VIDEO 1 — BATMAN BEGINS, YA INCRUSTADO. Antes de reproducir: ‘Las dificultades no siempre vienen para destruirnos; también pueden enseñarnos a levantarnos de otra manera’. Tocá reproducir en el video. Después: ‘Caer no significa ser derrotado. La verdadera derrota sería permitir que la dificultad decida quiénes somos’. Avanzá a Vencer dentro.">
+      <img class="bg" src="assets/forja.png" alt="Fuego y acero como metáfora de una dificultad que fortalece" />
+      <div class="overlay"></div><div class="grain"></div>
+      <div class="content">
+        <div class="video-layout">
+          <div>
+            <div class="eyebrow">Una dificultad también puede enseñarnos</div>
+            <h2>Caer no significa ser derrotado.</h2>
+            <p class="lead" style="margin-top:22px">La victoria comienza cuando decidimos que una caída no tendrá la última palabra.</p>
+            <div class="quote">No se trata de no caer. Se trata de <strong>qué hacemos después de caer</strong>.</div>
+            <div class="video-kicker">Batman Begins · escena en español</div>
+          </div>
+          <div class="embedded-video">
+            <iframe data-video-src="https://www.youtube.com/embed/eNsKca5SbeM?rel=0&modestbranding=1" title="Batman Begins - por qué nos caemos" data-poster="assets/forja.png" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="NÚCLEO DEL GOSHO. Explicá que la victoria no es ganarle a otra persona. Es no permitir que miedo, bronca, resignación, orgullo o desesperanza gobiernen nuestra vida. Frase clave: ‘La primera victoria ocurre en nuestro corazón’.">
+      <img class="bg" src="assets/primavera.png" alt="Camino entre cerezos con montaña al amanecer" />
+      <div class="overlay center"></div><div class="grain"></div>
+      <div class="content narrow" style="text-align:center">
+        <div class="eyebrow" style="justify-content:center">Victoria o derrota</div>
+        <div class="bigword">VENCER<br><em>DENTRO</em></div>
+        <p class="lead" style="margin:30px auto 0">La lucha fundamental no es contra otra persona. Es entre nuestra naturaleza de Buda y las funciones negativas que intentan dominar nuestra vida.</p>
+      </div>
+    </section>
+
+    <section class="slide" data-note="VIDEO 2 — EL ÚLTIMO SAMURÁI, YA INCRUSTADO. Primero explicá: ‘Ser maestro de nuestra mente no significa no sentir; significa no dejar que el miedo, la ira o la angustia conduzcan nuestras decisiones’. Antes del video: ‘Miremos esta escena solo como una analogía de disciplina y dominio interior, no como una enseñanza budista’. Reproducí. Después: ‘La victoria empieza antes de que cambie la situación externa: empieza cuando cambia nuestra manera de enfrentarla’.">
+      <img class="bg" src="assets/shijo.png" alt="Samurái frente al horizonte" />
+      <div class="overlay"></div><div class="grain"></div>
+      <div class="content">
+        <div class="video-layout">
+          <div>
+            <div class="eyebrow">La clave de Shijo Kingo</div>
+            <h2>“Maestro de su mente”</h2>
+            <p class="lead" style="margin-top:22px">No significa no sentir miedo, tristeza o enojo. Significa que esas emociones <strong style="color:var(--gold2)">no conduzcan nuestras decisiones</strong>.</p>
+            <div class="quote">La primera victoria ocurre <strong>dentro de nosotros</strong>.</div>
+            <div class="video-kicker">El Último Samurai · escena en castellano</div>
+          </div>
+          <div class="embedded-video">
+            <iframe data-video-src="https://www.youtube.com/embed/YclVmjuH5L4?rel=0&modestbranding=1" title="El Último Samurai - disciplina" data-poster="assets/shijo.png" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="TRES PRINCIPIOS. Levantá tres dedos: 1) tomar el budismo como base; 2) luchar contra nuestra propia debilidad; 3) creer en el poder de la Ley Mística y actuar con integridad y humanismo. Remarcá: ‘No es una fe pasiva: oramos, transformamos nuestra vida y actuamos’.">
+      <img class="bg" src="assets/primavera.png" alt="Paisaje primaveral japonés" />
+      <div class="overlay"></div><div class="grain"></div>
+      <div class="content">
+        <div class="eyebrow">Tres principios para la victoria</div>
+        <h2>Fe que se transforma en acción.</h2>
+        <div class="grid">
+          <article class="card"><div class="num">01</div><h3>Tomar el budismo como base</h3><p>Vivir basados en la fe en la Ley Mística, Nam-myoho-renge-kyo.</p></article>
+          <article class="card"><div class="num">02</div><h3>Vencer nuestra debilidad</h3><p>Reconocer las funciones negativas y cultivar una fortaleza interior que no dependa de las circunstancias.</p></article>
+          <article class="card"><div class="num">03</div><h3>Actuar con humanidad</h3><p>Creer en el poder de la Ley, perseverar con integridad y hacer surgir sabiduría en la realidad concreta.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="BAJARLO A LA VIDA. Recorré la secuencia: dificultad → lucha interior → fe → acción → transformación. Podés preguntar: ‘¿Qué forma toma hoy una función negativa en nuestra vida?’. Remarcá que la victoria no siempre es instantánea: muchas veces es un proceso de pequeños pasos sostenidos.">
+      <img class="bg" src="assets/forja.png" alt="Forja de una espada como metáfora de transformación" />
+      <div class="overlay"></div><div class="grain"></div>
+      <div class="content">
+        <div class="eyebrow">Llevarlo a nuestra vida</div>
+        <h2>La victoria es un proceso.</h2>
+        <div class="timeline" style="grid-template-columns:repeat(5,1fr)">
+          <div class="step"><b>Dificultad</b><span>Algo nos desafía</span></div>
+          <div class="step"><b>Lucha interior</b><span>Miedo, duda, enojo o resignación</span></div>
+          <div class="step"><b>Fe</b><span>Orar y volver al fundamento</span></div>
+          <div class="step"><b>Acción</b><span>Elegir una respuesta valiente y humana</span></div>
+          <div class="step"><b>Transformación</b><span>Crear valor y avanzar</span></div>
+        </div>
+        <div class="quote">No siempre podemos elegir la dificultad. Sí podemos decidir <strong>quién queremos ser frente a ella</strong>.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="REVOLUCIÓN HUMANA. Explicá que la práctica no significa vivir sin problemas, sino hacer surgir valor, sabiduría, compasión y perseverancia para transformarlos. Puente: ‘Lo importante no es solamente lo que nos pasó, sino qué hacemos con eso’.">
+      <img class="bg" src="assets/primavera.png" alt="Camino luminoso entre cerezos" />
+      <div class="overlay center"></div><div class="grain"></div>
+      <div class="content narrow" style="text-align:center">
+        <div class="eyebrow" style="justify-content:center">Revolución humana</div>
+        <h2>Convertir la dificultad en crecimiento.</h2>
+        <p class="lead" style="margin:26px auto 0">La práctica no elimina automáticamente los problemas. Nos permite hacer surgir recursos internos —valor, sabiduría, compasión y perseverancia— para transformarlos.</p>
+        <div class="tagrow" style="justify-content:center"><span class="tag">Valor</span><span class="tag">Sabiduría</span><span class="tag">Compasión</span><span class="tag">Perseverancia</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="VIDEO 3 — EL REY LEÓN, YA INCRUSTADO. Antes: ‘Esta escena plantea algo profundamente humano: frente a una experiencia dolorosa podemos quedar detenidos o aprender de ella’. Reproducí. Después: ‘Nichiren nos enseña a tomar las dificultades como un medio para forjar la fe y hacer surgir recursos que quizá todavía no conocíamos en nosotros’.">
+      <img class="bg" src="assets/primavera.png" alt="Sendero luminoso como símbolo de avanzar después de una dificultad" />
+      <div class="overlay"></div><div class="grain"></div>
+      <div class="content">
+        <div class="video-layout">
+          <div>
+            <div class="eyebrow">Transformar, no negar</div>
+            <h2>Podemos aprender de lo que duele.</h2>
+            <p class="lead" style="margin-top:22px">El budismo no nos pide negar el sufrimiento. Nos desafía a no quedar definidos por él y a convertir incluso una experiencia difícil en una causa para crecer.</p>
+            <div class="quote">Lo que vivimos forma parte de nuestra historia. <strong>Lo que hacemos con ello forma parte de nuestra revolución humana.</strong></div>
+            <div class="video-kicker">El Rey León · escena en español</div>
+          </div>
+          <div class="embedded-video">
+            <iframe data-video-src="https://www.youtube.com/embed/QsRFyu3JyTY?rel=0&modestbranding=1" title="El Rey León - aprender del pasado" data-poster="assets/primavera.png" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="CIERRE CON LA ESPADA. Volvé a la metáfora inicial: ‘Una espada no se forja evitando el fuego’. Explicá: ser Héroe del Mundo no es ser perfecto ni no tener problemas; es no ser derrotado interiormente y seguir creando valor. Pausa antes de la frase final.">
+      <img class="bg" src="assets/forja.png" alt="Espada forjada al fuego" />
+      <div class="overlay center"></div><div class="grain"></div>
+      <div class="content narrow" style="text-align:center">
+        <div class="eyebrow" style="justify-content:center">Conclusión</div>
+        <h2>Una espada no se forja evitando el fuego.</h2>
+        <p class="lead" style="margin:28px auto 0">Ser un “héroe del mundo” no significa ser perfecto ni vivir sin problemas. Significa enfrentar la realidad, no ser derrotado interiormente y seguir creando valor.</p>
+        <div class="quote" style="margin-inline:auto">Dificultad → lucha interior → fe y acción → transformación → victoria.</div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="DIÁLOGO. Leé la pregunta y dejá unos segundos de silencio: ‘¿Qué situación de nuestra vida sentimos hoy que nos está forjando, y qué victoria interior queremos lograr frente a ella?’. Si cuesta arrancar, compartí vos primero un ejemplo breve y concreto.">
+      <img class="bg" src="assets/primavera.png" alt="Primavera japonesa y sendero hacia la montaña" />
+      <div class="overlay center"></div><div class="grain"></div>
+      <div class="content narrow">
+        <div class="eyebrow" style="justify-content:center;display:flex">Para dialogar</div>
+        <div class="question">¿Qué situación de nuestra vida sentimos hoy que nos está <strong>forjando</strong>, y qué victoria interior queremos lograr frente a ella?</div>
+      </div>
+    </section>
+
+
+    <section class="slide" data-note="DAISAKU IKEDA. Leé la cita despacio: ‘La sonrisa victoriosa de nuestros miembros es una brillante fuente de esperanza’. Enlazá: ‘Nuestra victoria no queda solamente en nosotros; nuestra prueba real puede darle esperanza a otra persona’. No alargues demasiado: dejá que la imagen y la frase trabajen.">
+      <img class="bg" src="assets/primavera.png" alt="Paisaje de primavera como fondo de cierre" />
+      <div class="overlay"></div><div class="grain"></div>
+      <div class="content">
+        <div class="hero-layout" style="grid-template-columns:.8fr 1.2fr;gap:34px;align-items:center">
+          <div class="panel portrait-panel">
+            <img class="portrait" src="assets/daisaku-ikeda.png" alt="Daisaku Ikeda" />
+          </div>
+          <div>
+            <div class="eyebrow">Cierre · Daisaku Ikeda</div>
+            <h2>La victoria interior crea esperanza.</h2>
+            <div class="quote">“La sonrisa victoriosa de nuestros miembros es una brillante fuente de esperanza”.<span>Daisaku Ikeda</span></div>
+            <p class="lead" style="margin-top:22px">Esta idea dialoga profundamente con <em>El Héroe del Mundo</em>: cuando una persona vence dentro de su propia vida, esa transformación no queda encerrada en sí misma; irradia valor, aliento y confianza a los demás.</p>
+            <p class="small" style="margin-top:18px;color:#f0e0b4">Cita: Daisaku Ikeda, <em>La sabiduría para ser feliz y crear la paz</em>, vol. 2, Buenos Aires: Azul índigo, 2022, p. 72.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="slide" data-note="REFLEXIÓN FINAL. Mirá al grupo y hablá más despacio. Podés decir: ‘Quizás hoy alguno esté atravesando su propio fuego. Tal vez todavía no vea el resultado. Pero cada daimoku, cada decisión de levantarse y cada paso valiente está forjando algo en nuestra vida. Sigamos avanzando juntos. Nuestra victoria también puede ser la esperanza de alguien más’. Cerrá agradeciendo.">
+      <img class="bg" src="assets/primavera.png" alt="Paisaje de primavera como cierre esperanzador" />
+      <div class="overlay center"></div><div class="grain"></div>
+      <div class="content narrow" style="text-align:center">
+        <div class="eyebrow" style="justify-content:center">Reflexión final</div>
+        <h2>Que cada dificultad se convierta en causa de victoria.</h2>
+        <div class="quote" style="margin-inline:auto">Aun cuando hoy no veamos el resultado completo, toda oración sincera, todo esfuerzo por levantarnos una vez más y cada paso dado con valentía están forjando una vida más fuerte, más sabia y más humana.</div>
+        <p class="lead" style="margin:24px auto 0">Sigamos avanzando con confianza. Nuestra victoria personal no queda encerrada en nosotros: también puede convertirse en luz, esperanza y aliento para muchos otros.</p>
+        <div class="tagrow" style="justify-content:center"><span class="tag">Esperanza</span><span class="tag">Valentía</span><span class="tag">Transformación</span><span class="tag">Aliento</span></div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="ROCKY BALBOA · CIERRE EN VIDEO. Después de la reflexión final, decí: ‘Quiero dejarles una última escena. No como enseñanza budista, sino como una imagen sencilla de algo que hoy compartimos: la vida puede golpearnos, pero nuestra decisión de seguir avanzando también es una forma de victoria’. Reproducí el video. Cuando termine, dejá dos o tres segundos y avanzá a Muchas gracias.">
+      <img class="bg" src="assets/forja.png" alt="Fuego y horizonte como símbolo de perseverancia" />
+      <div class="overlay center"></div><div class="grain"></div>
+      <div class="content narrow" style="text-align:center">
+        <div class="eyebrow" style="justify-content:center">ROCKY BALBOA · CIERRE EN VIDEO</div>
+        <h2>Seguir avanzando también es una victoria.</h2>
+        <p class="lead" style="margin:18px auto 26px">No siempre podemos evitar los golpes de la vida. Pero podemos decidir que no tengan la última palabra.</p>
+        <div class="embedded-video" style="max-width:880px;margin:0 auto">
+          <iframe data-video-src="https://www.youtube.com/embed/g7dUyKpugeA?rel=0&modestbranding=1" title="Rocky Balboa - seguir avanzando" data-poster="assets/forja.png" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-note="CIERRE. Sonreí, agradecé la participación y cerrá sin agregar otra explicación. Podés decir simplemente: ‘Muchas gracias por compartir este espacio. Deseo de corazón que cada uno pueda transformar sus desafíos en una gran victoria’. ">
+      <img class="bg" src="assets/primavera.png" alt="Amanecer primaveral como cierre de la presentación" />
+      <div class="overlay center"></div><div class="grain"></div>
+      <div class="content narrow" style="text-align:center">
+        <div class="eyebrow" style="justify-content:center">Sadankai · El Héroe del Mundo</div>
+        <div class="thanks-title">Muchas<br><span style="color:var(--gold2)">gracias</span></div>
+        <p class="lead" style="margin:34px auto 0;max-width:760px">Que cada desafío se transforme en una oportunidad para hacer surgir nuestra mejor versión y alentar a quienes caminan a nuestro lado.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="topbar">
+    <button class="iconbtn" id="notesBtn" title="Notas del orador (N)">Notas</button>
+    <button class="iconbtn" id="fullBtn" title="Pantalla completa (F)">Pantalla completa</button>
+  </div>
+  <div class="nav">
+    <button id="prev" aria-label="Diapositiva anterior">‹</button>
+    <div class="counter"><span id="current">1</span> / <span id="total">10</span></div>
+    <button id="next" aria-label="Diapositiva siguiente">›</button>
+  </div>
+  <aside class="notes" id="notes"><h4>Notas para explicar</h4><p id="noteText"></p></aside>
+</div>
+<script>
+(() => {
+  const slidesEl = document.getElementById('slides');
+  const slides = [...document.querySelectorAll('.slide')];
+  const currentEl = document.getElementById('current');
+  const totalEl = document.getElementById('total');
+  const progress = document.getElementById('progress');
+  const noteText = document.getElementById('noteText');
+  const notes = document.getElementById('notes');
+  let index = 0;
+  totalEl.textContent = slides.length;
+
+  const render = () => {
+    slidesEl.style.transform = `translateX(${-index * 100}vw)`;
+    slides.forEach((slide, i) => {
+      const active = i === index;
+      slide.classList.toggle('active', active);
+      slide.querySelectorAll('iframe[data-video-src]').forEach(frame => {
+        const holder = frame.closest('.embedded-video');
+        let fallback = holder?.querySelector('.video-fallback');
+        const isHttp = location.protocol === 'http:' || location.protocol === 'https:';
+
+        if (!fallback && holder) {
+          const match = frame.dataset.videoSrc.match(/\/embed\/([^?&]+)/);
+          const videoId = match ? match[1] : '';
+          const watchUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : 'https://www.youtube.com/';
+          fallback = document.createElement('div');
+          fallback.className = 'video-fallback';
+          const poster = frame.dataset.poster || slide.querySelector('.bg')?.getAttribute('src') || '';
+          fallback.innerHTML = `
+            <a class="video-fallback-link" href="${watchUrl}" target="_blank" rel="noopener">
+              ${poster ? `<img src="${poster}" alt="${frame.title || 'Video ilustrativo'}">` : ''}
+              <div class="video-fallback-shade"></div>
+              <div class="video-fallback-content">
+                <div class="video-fallback-icon">▶</div>
+                <h4>${frame.title || 'Video ilustrativo'}</h4>
+                <p>Tocá la imagen para abrir el video directamente en YouTube.</p>
+                <span class="video-fallback-cta">Abrir video en YouTube</span>
+              </div>
+            </a>`;
+          holder.appendChild(fallback);
+        }
+
+        if (!active) {
+          if (frame.hasAttribute('src')) frame.removeAttribute('src');
+          frame.style.display = 'none';
+          fallback?.classList.remove('show');
+          return;
+        }
+
+        if (!isHttp) {
+          if (frame.hasAttribute('src')) frame.removeAttribute('src');
+          frame.style.display = 'none';
+          fallback?.classList.add('show');
+          return;
+        }
+
+        fallback?.classList.remove('show');
+        frame.style.display = 'block';
+        if (!frame.hasAttribute('src')) {
+          const sep = frame.dataset.videoSrc.includes('?') ? '&' : '?';
+          const src = `${frame.dataset.videoSrc}${sep}origin=${encodeURIComponent(location.origin)}`;
+          frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+          frame.setAttribute('src', src);
+        }
+      });
+    });
+    currentEl.textContent = index + 1;
+    progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+    noteText.textContent = slides[index].dataset.note || 'Sin notas.';
+    history.replaceState(null, '', `#${index + 1}`);
+  };
+  const go = n => { index = Math.max(0, Math.min(slides.length - 1, n)); render(); };
+  const next = () => go(index + 1), prev = () => go(index - 1);
+
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', prev);
+  document.getElementById('notesBtn').addEventListener('click', () => notes.classList.toggle('show'));
+  document.getElementById('fullBtn').addEventListener('click', async () => {
+    try {
+      if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+      else await document.exitFullscreen();
+    } catch(e){}
+  });
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); next(); }
+    if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); prev(); }
+    if (e.key.toLowerCase() === 'f') document.getElementById('fullBtn').click();
+    if (e.key.toLowerCase() === 'n') notes.classList.toggle('show');
+    if (e.key === 'Escape') notes.classList.remove('show');
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+
+  let startX = 0, startY = 0;
+  document.addEventListener('touchstart', e => { startX = e.changedTouches[0].screenX; startY = e.changedTouches[0].screenY; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - startX;
+    const dy = e.changedTouches[0].screenY - startY;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.25) dx < 0 ? next() : prev();
+  }, {passive:true});
+
+  const hash = parseInt(location.hash.replace('#',''),10);
+  if (hash >= 1 && hash <= slides.length) index = hash - 1;
+  render();
+})();
+</script>
+</body>
+</html>
